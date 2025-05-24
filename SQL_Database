@@ -1,0 +1,10 @@
+-- No psql ou em uma ferramenta SQL conectada ao seu servidor PostgreSQL
+CREATE DATABASE "TesteC2S";
+
+
+-- No psql ou em uma ferramenta SQL
+CREATE USER "Teste" WITH PASSWORD 'teste123';
+ALTER DATABASE "TesteC2S" OWNER TO "Teste";
+GRANT ALL PRIVILEGES ON DATABASE "TesteC2S" TO "Teste";
+ALTER USER "Teste" WITH PASSWORD 'teste123';
+GRANT ALL PRIVILEGES ON DATABASE "TesteC2S" TO "Teste";
