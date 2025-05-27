@@ -1,5 +1,5 @@
-from pydantic import BaseModel
-from typing import Optional # Usado para campos opcionais
+from pydantic import BaseModel, ConfigDict 
+from typing import Optional, List
 
 # --------------------
 # Schema para os Filtros da Requisição MCP
@@ -51,6 +51,5 @@ class VeiculoResposta(BaseModel):
    
 
     class Config:
-        orm_mode = True  # Permite que o Pydantic trabalhe diretamente com objetos SQLAlchemy,
-                         # facilitando a conversão do modelo ORM para este schema de resposta.
+        model_config = ConfigDict(from_attributes=True)
 
