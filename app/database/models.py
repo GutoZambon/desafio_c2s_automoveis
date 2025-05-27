@@ -1,7 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean, Float
 from sqlalchemy.orm import declarative_base # Correção para SQLAlchemy >= 1.4, antes era sqlalchemy.ext.declarative
 from sqlalchemy import create_engine
-from app.core.config import settings # Supondo que suas configs de DB estão aqui
 
 # Base declarativa para nossos modelos SQLAlchemy.
 # Em projetos maiores, isso pode ficar em um arquivo separado, como app/database/base_class.py
@@ -30,16 +29,5 @@ class Veiculo(Base):
     def __repr__(self):
         return f"<Veiculo(id={self.id}, marca='{self.marca}', modelo='{self.modelo}', ano_inicial={self.ano_producao_inicial})>"
 
-# Exemplo de como criar as tabelas no banco (geralmente em um script de inicialização ou usando Alembic para migrações)
 
 
-DATABASE_URL = settings.DATABASE_URL
-engine = create_engine(DATABASE_URL)
-
-def create_db_and_tables():
-    Base.metadata.create_all(bind=engine)
-
-if __name__ == "__main__":
-    print("Criando tabelas (se não existirem)...")    
-    Base.metadata.create_all(bind=engine)
-    print("Tabelas prontas (ou já existiam).")

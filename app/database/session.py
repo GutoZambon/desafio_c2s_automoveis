@@ -1,23 +1,17 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
-# Importa a string de conexão do nosso arquivo de configuração
 from app.core.config import DATABASE_URL
 
-# Cria o engine do SQLAlchemy.
-# O engine é o ponto de partida para qualquer aplicação SQLAlchemy.
-# Ele "sabe" como se comunicar com um banco de dados específico através da DATABASE_URL.
-# O argumento pool_pre_ping=True verifica as conexões antes de usá-las,
-# o que pode ajudar a evitar problemas com conexões que foram fechadas pelo servidor do banco.
 engine = create_engine(DATABASE_URL, pool_pre_ping=True)
 
-# Cria uma classe SessionLocal.
-# Cada instância de SessionLocal será uma sessão de banco de dados.
-# Uma sessão é a interface primária para o seu código Python "conversar" com o banco de dados.
-# Ela permite que você consulte, adicione, atualize e delete registros.
-# autocommit=False e autoflush=False são configurações comuns;
-# você controlará o commit das transações manualmente.
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db  # Fornece a sessão para o endpoint
+    finally:
+        db.close() # Garante que a sessão seja fechada após o uso
 
 # Funções para criar e fechar sessões de banco de dados
 # (Útil especialmente se você estiver construindo uma API com FastAPI, por exemplo)
